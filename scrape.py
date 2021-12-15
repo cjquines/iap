@@ -1,4 +1,5 @@
 import requests
+import yaml
 
 TYPE = 102809  # id of iap events
 URL = "http://calendar.mit.edu/api/2/events"
@@ -64,34 +65,44 @@ def merge_events(events):
     return result
 
 
-# format event given per localist api
-def format_event(event):
-    # TODO: use an actual yaml dumper or something
-    res = []
-    res.append("---")
-    res.append(f"title: '{event.title}'")
-    res.append(f"url: '{event.url}'")
-    res.append(
-        f"location: '{( event.location + event.room_number ) or event.location_name}'"
-    )
-    res.append("sessions:")
+# turn event into front matter
+def parse_front_matter(event):
+    front_matter = {}
+    front_matter["title"] = event.title
+    front_matter["url"] = event.url
+    if event.location_name:
+        front_matter["location"] = event.location_name
+    elif event.location and event.room_number:
+        front_matter["location"] = event.location + " " + event.room_number
+    else:
+        front_matter["location"] = event.location
+    front_matter["contact"] = event.custom_fields.contact_email
+    front_matter["localist_url"] = event.localist_url
+    front_matter["sessions"] = []
     for wrapper in event.event_instances:
         instance = wrapper.event_instance
-        res.append(f"  - start: '{instance.start}'")
-        res.append(f"    end: '{instance.end}'")
-    res.append(f"contact: '{event.custom_fields.contact_email}'")
-    res.append("interests:")
+        front_matter["sessions"].append({
+            "start": instance.start,
+            "end": instance.end
+        })
+    front_matter["interests"] = []
     for interest in event.filters.event_events_by_interest:
-        res.append(f"  - '{interest.name}'")
-    res.append("types:")
+        front_matter["interests"].append(interest.name)
+    front_matter["types"] = []
     for type_ in event.filters.event_types:
-        res.append(f"  - '{type_.name}'")
-    res.append("sponsors:")
+        front_matter["types"].append(type_.name)
+    front_matter["sponsors"] = []
     for sponsor in event.departments:
-        res.append(f"  - '{sponsor.name}'")
+        front_matter["sponsors"].append(sponsor.name)
     for group in event.groups:
-        res.append(f"  - '{group.name}'")
-    res.append(f"localist_url: '{event.localist_url}'")
+        front_matter["sponsors"].append(group.name)
+    return front_matter
+
+# format event given per localist api
+def format_event(event):
+    res = []
+    res.append("---")
+    res.append(yaml.dump(parse_front_matter(event)))
     res.append("---")
     res.append(event.description)
     return "\n".join(res)
