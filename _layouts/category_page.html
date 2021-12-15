@@ -1,0 +1,8 @@
+---
+layout: default
+---
+{% comment %} TODO: sort somehow {% endcomment %}
+{% for doc in page.docs %}
+  <h3>{{ doc.title }}</h3>
+  <div>{{ doc.content }}</div>
+{% endfor %}

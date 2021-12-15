@@ -9,6 +9,13 @@ collections:
   events:
     output: false
 
+defaults:
+  - scope:
+      type: categories
+    values:
+      layout: category_page
+      permalink: :category/:item.html
+
 # Build settings
 theme: minima
 plugins:

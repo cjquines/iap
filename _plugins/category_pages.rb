@@ -37,10 +37,19 @@ module Jekyll
         @basename = Jekyll::Utils.slugify(item)
         @ext = ".html"
         @name = @basename + @ext
-        @data = {}
+        @data = {
+          "docs" => docs
+        }
         data.default_proc = proc do |_, key|
           site.frontmatter_defaults.find(relative_path, :categories, key)
         end
+      end
+
+      def url_placeholders
+        {
+          :category => @dir,
+          :item => @basename,
+        }
       end
     end
   end
