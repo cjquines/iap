@@ -1,8 +1,9 @@
 ---
 layout: default
 ---
-{% comment %} TODO: sort somehow {% endcomment %}
-{% for doc in page.docs %}
-  <h3>{{ doc.title }}</h3>
-  <div>{{ doc.content }}</div>
+<h3>{{ page.title }}</h3>
+
+{% assign docs = page.docs | sort: 'title' %}
+{% for doc in docs %}
+  {% include event.html event=doc %}
 {% endfor %}

@@ -1,0 +1,77 @@
+---
+---
+
+@import "minima";
+
+body {
+  background-color: #f0f0f0;
+}
+
+.event {
+  background-color: #fff;
+  margin-bottom: 1em;
+
+  summary {
+    padding: 0.5em;
+  }
+
+  .details {
+    border-top: 2px solid #eee;
+    padding: 0.5em;
+  }
+
+  .localist {
+    margin-bottom: 0.5em;
+  }
+
+  .metadata {
+    margin-bottom: 1em;
+
+    b {
+      color: #002c5b;
+    }
+
+    p {
+      margin-bottom: 0.1em;
+    }
+  }
+
+  .sessions {
+    border: none;
+    margin: 0.5em 0 2em;
+
+    th, td {
+      border: none;
+      padding: 0.1em;
+    }
+
+    td:nth-child(1) {
+      width: 4em;
+    }
+
+    td:nth-child(2) {
+      width: 3em;
+    }
+  }
+
+  .content {
+    &:before {
+      content: "";
+      margin: 1em 0 0.5em;
+      display: block;
+      width: 10em;
+      height: 5px;
+      background-color: #ddd;
+    }
+  }
+}
+
+.site-footer {
+  border-top: 1px solid #ccc;
+  padding: 1em 0;
+
+  p {
+    margin-bottom: 0.1em;
+    text-align: center;
+  }
+}

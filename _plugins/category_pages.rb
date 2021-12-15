@@ -38,7 +38,8 @@ module Jekyll
         @ext = ".html"
         @name = @basename + @ext
         @data = {
-          "docs" => docs
+          "title" => item,
+          "docs" => docs,
         }
         data.default_proc = proc do |_, key|
           site.frontmatter_defaults.find(relative_path, :categories, key)

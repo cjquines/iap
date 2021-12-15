@@ -69,13 +69,11 @@ def merge_events(events):
 def parse_front_matter(event):
     front_matter = {}
     front_matter["title"] = event.title
-    front_matter["url"] = event.url
-    if event.location_name:
-        front_matter["location"] = event.location_name
-    elif event.location and event.room_number:
-        front_matter["location"] = event.location + " " + event.room_number
+    front_matter["link"] = event.url
+    if event.experience == "virtual":
+        front_matter["location"] = "Virtual"
     else:
-        front_matter["location"] = event.location
+        front_matter["location"] = ", ".join(filter(None, [event.location, event.location_name, event.room_number]))
     front_matter["contact"] = event.custom_fields.contact_email
     front_matter["localist_url"] = event.localist_url
     front_matter["sessions"] = []
@@ -87,7 +85,8 @@ def parse_front_matter(event):
         })
     front_matter["interests"] = []
     for interest in event.filters.event_events_by_interest:
-        front_matter["interests"].append(interest.name)
+        if "IAP" not in interest.name:
+            front_matter["interests"].append(interest.name)
     front_matter["types"] = []
     for type_ in event.filters.event_types:
         front_matter["types"].append(type_.name)

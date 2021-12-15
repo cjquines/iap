@@ -1,0 +1,45 @@
+{% assign event = include.event %}
+
+<details class="event">
+  <summary>{{ event.title }}</summary>
+  <div class="details">
+    <div class="localist">
+      <a href="{{ event.localist_url }}">View on MIT Events Calendar</a>
+    </div>
+    <div class="metadata">
+      {% unless event.location == "" %}
+      <p><b>Location:</b> {{ event.location }}</p>
+      {% endunless %} {% unless event.link == "" or event.link == null %}
+      <p><b>Link:</b> <a href="{{ event.link }}">{{ event.link }}</a></p>
+      {% endunless %} {% assign sponsors = event.sponsors | join: ', '%} {%
+      unless sponsors == "" %}
+      <p><b>Sponsors:</b> {{ sponsors }}</p>
+      {% endunless %} {% unless event.contact == "" %}
+      <p>
+        <b>Contact:</b>
+        <a href="mailto:{{ event.contact }}">{{ event.contact }}</a>
+      </p>
+      {% endunless %}
+    </div>
+    <table class="sessions">
+      {% comment %} so that the first row is gray {% endcomment %}
+      <tr>
+      </tr>
+      {% for session in event.sessions %}
+      <tr>
+        <td>{{ session.start | date: "%b/%d" }}</td>
+        <td>{{ session.start | date: "%a" }}</td>
+        {% if session.end == "" %}
+        <td>{{ session.start | date: "%I:%M%p" }}</td>
+        {% else %}
+        <td>
+          {{ session.start | date: "%I:%M%p" }}–{{ session.end | date: "%I:%M%p"
+          }}
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+    <div class="content">{{ event.content }}</div>
+  </div>
+</details>

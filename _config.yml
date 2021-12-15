@@ -5,6 +5,9 @@ description: >-
   Lovingly scraped from the MIT events calendar.
 baseurl: "/iap"
 
+header_pages:
+  -
+
 collections:
   events:
     output: false
