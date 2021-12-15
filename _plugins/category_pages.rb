@@ -9,23 +9,32 @@ module Jekyll
       priority :lowest
 
       def generate(site)
+        categories = ["types", "interests", "sponsors"]
         event = site.collections["events"]
-        # collect all distinct interests
-        interests = event.docs.map { |doc| doc.data["interests"] } .flatten.uniq!
-        # for each interest, make a page
-        interests.each do |interest|
-          docs = event.docs.select { |doc| doc.data["interests"].include?(interest) }
-          site.pages << CategoryPage.new(site, interest, docs)
+        home = site.pages.find { |page| page.name == 'index.md' }
+        categories.each do |category|
+          # collect distinct filters for this category
+          items = event.docs.map { |doc| doc.data[category] } .flatten.uniq!.sort!
+          # inject into home.html template
+          # so e.g. interests = ["Academic", academic.html, ...]
+          home.data[category] = []
+          # make the actual page for each item
+          items.each do |item|
+            docs = event.docs.select { |doc| doc.data[category].include?(item) }
+            page = CategoryPage.new(site, category, item, docs)
+            site.pages << page
+            home.data[category] << [item, page.relative_path]
+          end
         end
       end
     end
 
     class CategoryPage < Jekyll::Page
-      def initialize(site, interest, docs)
+      def initialize(site, category, item, docs)
         @site = site
         @base = site.source
-        @dir = "interests"
-        @basename = Jekyll::Utils.slugify(interest)
+        @dir = category
+        @basename = Jekyll::Utils.slugify(item)
         @ext = ".html"
         @name = @basename + @ext
         @data = {}
