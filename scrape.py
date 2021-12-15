@@ -1,3 +1,4 @@
+import datetime
 import requests
 import yaml
 
@@ -115,3 +116,5 @@ if __name__ == "__main__":
             file.write(format_event(event))
         if DEBUG:
             break
+    with open("./_data/meta.yaml", "w") as file:
+        file.write(f"last_update: {datetime.datetime.now()}")
