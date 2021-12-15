@@ -1,9 +1,36 @@
 ---
 layout: default
 ---
-<h3>{{ page.title }}</h3>
+<h2>{{ page.title }}</h2>
 
+<p>
+  Sort by:
+  <a href="#" id="sort-by-title">title</a>,
+  <a href="#" id="sort-by-date">date</a>.
+</p>
+
+<div id="sort-title">
 {% assign docs = page.docs | sort: 'title' %}
 {% for doc in docs %}
   {% include event.html event=doc %}
 {% endfor %}
+</div>
+
+<div id="sort-date" style="display: none">
+{% assign docs = page.docs | sort: 'date' %}
+{% for doc in docs %}
+  {% include event.html event=doc %}
+{% endfor %}
+</div>
+
+<script>
+const [tButton, dButton, tDiv, dDiv] = ["sort-by-title", "sort-by-date", "sort-title", "sort-date"].map((id_) => document.getElementById(id_));
+tButton.addEventListener("click", () => {
+  dDiv.style.display = "none";
+  tDiv.style.display = "initial";
+});
+dButton.addEventListener("click", () => {
+  tDiv.style.display = "none";
+  dDiv.style.display = "initial";
+});
+</script>

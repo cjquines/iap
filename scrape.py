@@ -84,6 +84,7 @@ def parse_front_matter(event):
             "start": instance.start,
             "end": instance.end
         })
+    front_matter["date"] = front_matter["sessions"][0]["start"]
     front_matter["interests"] = []
     for interest in event.filters.event_events_by_interest:
         if "IAP" not in interest.name:

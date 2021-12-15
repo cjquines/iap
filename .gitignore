@@ -1,4 +1,5 @@
-_events
+_events/*
+!_events/.gitkeep
 _site
 .sass-cache
 .jekyll-cache
@@ -6,5 +7,6 @@ _site
 vendor
 deploy.sh
 .bundle
-_data
+_data/*
+!_data/.gitkeep
 

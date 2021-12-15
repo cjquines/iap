@@ -4,25 +4,33 @@ layout: default
 
 <div class="home">
   {% if page.title %}
-    <h1 class="page-heading">{{ page.title }}</h1>
+  <h1 class="page-heading">{{ page.title }}</h1>
   {% endif %}
 
-  <h3>Events by type</h3>
+  <p>
+    For events by date,
+    <a href="http://calendar.mit.edu/MIT_IAP/calendar/day/2022/1/3"
+      >the official website</a
+    >
+    works fine.
+  </p>
+
+  <h2>Events by type</h2>
   <ul>
-  {% for item in page.types %}
+    {% for item in page.types %}
     <li><a href="{{ item[1] }}">{{ item[0] }}</a></li>
-  {% endfor %}
+    {% endfor %}
   </ul>
-  <h3>Events by interest</h3>
+  <h2>Events by interest</h2>
   <ul>
-  {% for item in page.interests %}
+    {% for item in page.interests %}
     <li><a href="{{ item[1] }}">{{ item[0] }}</a></li>
-  {% endfor %}
+    {% endfor %}
   </ul>
-  <h3>Events by sponsor</h3>
+  <h2>Events by sponsor</h2>
   <ul>
-  {% for item in page.sponsors %}
+    {% for item in page.sponsors %}
     <li><a href="{{ item[1] }}">{{ item[0] }}</a></li>
-  {% endfor %}
+    {% endfor %}
   </ul>
 </div>
