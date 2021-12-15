@@ -5,3 +5,6 @@ _site
 .jekyll-metadata
 vendor
 deploy.sh
+.bundle
+_data
+

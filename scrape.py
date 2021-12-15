@@ -10,7 +10,7 @@ DEBUG = False
 
 # extremely and incredibly cursed
 class Wrapper:
-    def __init__(self, dict_: dict[str, str] = None):
+    def __init__(self, dict_ = None):
         self.dict = dict_ or {}
 
     def get(self, name):
