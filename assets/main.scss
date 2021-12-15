@@ -10,6 +10,7 @@ body {
 .event {
   background-color: #fff;
   margin-bottom: 1em;
+  overflow-x: hidden;
 
   summary {
     padding: 0.5em;
@@ -54,15 +55,13 @@ body {
     }
   }
 
-  .content {
-    &:before {
-      content: "";
-      margin: 1em 0 0.5em;
-      display: block;
-      width: 10em;
-      height: 5px;
-      background-color: #ddd;
-    }
+  .content:before, .metadata:before {
+    content: "";
+    margin: 1em 0 0.5em;
+    display: block;
+    width: 10em;
+    height: 5px;
+    background-color: #ddd;
   }
 }
 
