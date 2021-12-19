@@ -97,6 +97,9 @@ def parse_front_matter(event):
         front_matter["sponsors"].append(sponsor.name)
     for group in event.groups:
         front_matter["sponsors"].append(group.name)
+    for category in ["interests", "types", "sponsors"]:
+        if not front_matter[category]:
+            front_matter[category] = "Other"
     return front_matter
 
 # format event given per localist api
