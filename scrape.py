@@ -4,8 +4,15 @@ import yaml
 
 TYPE = 102809  # id of iap events
 URL = "http://calendar.mit.edu/api/2/events"
-YEAR = 2022
 DEBUG = False
+
+
+def iap_year():
+    # the next iap is either this year or next year
+    now = datetime.datetime.now()
+    if now < datetime.datetime(now.year, 1, 31):
+        return now.year
+    return now.year + 1
 
 
 # extremely and incredibly cursed
@@ -34,10 +41,11 @@ class Wrapper:
 # get and collect all iap events
 # events are returned per https://developer.localist.com/doc/api#event-json
 def get_events():
+    year = iap_year()
     params = {
         "type": TYPE,
-        "start": f"{YEAR}-01-01",
-        "end": f"{YEAR}-01-31",
+        "start": f"{year}-01-01",
+        "end": f"{year}-01-31",
         "page": 1,
         "pp": 100 if not DEBUG else 10,
     }
