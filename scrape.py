@@ -2,7 +2,7 @@ import datetime
 import requests
 import yaml
 
-TYPE = 102809  # id of iap events
+TYPE = 41427239949909  # id of iap events
 URL = "http://calendar.mit.edu/api/2/events"
 DEBUG = False
 
